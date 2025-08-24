@@ -42,13 +42,18 @@
       if (!countdownActive) return;
 
       const now = new Date().getTime();
-      const distance = targetDate - now;
+      let distance = targetDate - now;
 
       if (distance <= 0) {
         countdownElement.textContent = "🎉 Happy 18th Birthday, Hai! 🎂";
         countdownActive = false;
         return;
       }
+
+      // Calculate years (approximate by 365 days per year)
+      const yearMs = 1000 * 60 * 60 * 24 * 365;
+      const years = Math.floor(distance / yearMs);
+      distance %= yearMs;
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -57,10 +62,9 @@
       const milliseconds = distance % 1000;
 
       countdownElement.textContent = 
-        `${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
+        `${years}y ${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
     }
 
-    // Update every millisecond
     setInterval(updateCountdown, 1);
   </script>
 </body>
