@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hai's 18th Birthday Countdown</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: Arial, sans-serif;
+      flex-direction: column;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+    #countdown {
+      font-size: 1.6rem;
+      font-weight: bold;
+      background: #1e293b;
+      padding: 20px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+  </style>
+</head>
+<body>
+  <h1>Countdown to Hai's 18th Birthday 🎂</h1>
+  <div id="countdown">Loading...</div>
+
+  <script>
+    const countdownElement = document.getElementById("countdown");
+    const targetDate = new Date("July 12, 2029 00:00:00").getTime();
+    let countdownActive = true;
+
+    function updateCountdown() {
+      if (!countdownActive) return;
+
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        countdownElement.textContent = "🎉 Happy 18th Birthday, Hai! 🎂";
+        countdownActive = false;
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      const milliseconds = distance % 1000;
+
+      countdownElement.textContent = 
+        `${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
+    }
+
+    // Update every millisecond
+    setInterval(updateCountdown, 1);
+  </script>
+</body>
+</html>
