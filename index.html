@@ -35,34 +35,39 @@
 
   <script>
     const countdownElement = document.getElementById("countdown");
-    const targetDate = new Date("July 12, 2029 00:00:00").getTime();
-    let countdownActive = true;
+    const targetDate = new Date("July 12, 2029 00:00:00");
 
     function updateCountdown() {
-      if (!countdownActive) return;
-
-      const now = new Date().getTime();
-      let distance = targetDate - now;
-
-      if (distance <= 0) {
+      const now = new Date();
+      if (now >= targetDate) {
         countdownElement.textContent = "🎉 Happy 18th Birthday, Hai! 🎂";
-        countdownActive = false;
         return;
       }
 
-      // Calculate years (approximate by 365 days per year)
-      const yearMs = 1000 * 60 * 60 * 24 * 365;
-      const years = Math.floor(distance / yearMs);
-      distance %= yearMs;
+      // Calculate date differences
+      let years = targetDate.getFullYear() - now.getFullYear();
+      let months = targetDate.getMonth() - now.getMonth();
+      let days = targetDate.getDate() - now.getDate();
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      const milliseconds = distance % 1000;
+      if (days < 0) {
+        months--;
+        const prevMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+        days += prevMonth.getDate();
+      }
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      // Time differences
+      const timeDiff = targetDate.getTime() - now.getTime();
+      const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+      const milliseconds = timeDiff % 1000;
 
       countdownElement.textContent = 
-        `${years}y ${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
+        `${years}y ${months}mo ${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
     }
 
     setInterval(updateCountdown, 1);
