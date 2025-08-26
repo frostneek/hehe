@@ -14,19 +14,38 @@
       color: #f8fafc;
       font-family: Arial, sans-serif;
       text-align: center;
+      margin: 0;
     }
     h1 {
       font-size: 2.2rem;
       margin-bottom: 20px;
     }
-    #countdown, #times {
+    #countdown {
       font-size: 1.6rem;
       font-weight: bold;
       background: #1e293b;
       padding: 20px 40px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      margin: 10px 0;
+      margin-bottom: 20px;
+    }
+    #times {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      width: 80%;
+      max-width: 600px;
+    }
+    .time-box {
+      background: #334155;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1.4rem;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -34,8 +53,8 @@
   <h1>Countdown to Hai's 18th Birthday 🎂</h1>
   <div id="countdown">Loading...</div>
   <div id="times">
-    <div id="kaidenTime">Kaiden's Time: Loading...</div>
-    <div id="haiTime">Hai's Time: Loading...</div>
+    <div id="kaidenTime" class="time-box">Kaiden's Time: Loading...</div>
+    <div id="haiTime" class="time-box">Hai's Time: Loading...</div>
   </div>
 
   <script>
@@ -94,7 +113,6 @@
       haiElement.textContent = `Hai's Time: ${canadaTime}`;
     }
 
-    // Update both every millisecond
     setInterval(() => {
       updateCountdown();
       updateTimes();
