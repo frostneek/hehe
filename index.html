@@ -6,35 +6,42 @@
   <style>
     body {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       background: #0f172a;
       color: #f8fafc;
       font-family: Arial, sans-serif;
-      flex-direction: column;
       text-align: center;
     }
     h1 {
       font-size: 2.2rem;
       margin-bottom: 20px;
     }
-    #countdown {
+    #countdown, #times {
       font-size: 1.6rem;
       font-weight: bold;
       background: #1e293b;
       padding: 20px 40px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      margin: 10px 0;
     }
   </style>
 </head>
 <body>
   <h1>Countdown to Hai's 18th Birthday 🎂</h1>
   <div id="countdown">Loading...</div>
+  <div id="times">
+    <div id="kaidenTime">Kaiden's Time: Loading...</div>
+    <div id="haiTime">Hai's Time: Loading...</div>
+  </div>
 
   <script>
     const countdownElement = document.getElementById("countdown");
+    const kaidenElement = document.getElementById("kaidenTime");
+    const haiElement = document.getElementById("haiTime");
     const targetDate = new Date("July 12, 2029 00:00:00");
 
     function updateCountdown() {
@@ -70,7 +77,28 @@
         `${years}y ${months}mo ${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
     }
 
-    setInterval(updateCountdown, 1);
+    function updateTimes() {
+      const now = new Date();
+
+      const englandTime = now.toLocaleString("en-GB", { 
+        timeZone: "Europe/London", 
+        hour12: false 
+      });
+
+      const canadaTime = now.toLocaleString("en-CA", { 
+        timeZone: "America/Toronto", 
+        hour12: false 
+      });
+
+      kaidenElement.textContent = `Kaiden's Time: ${englandTime}`;
+      haiElement.textContent = `Hai's Time: ${canadaTime}`;
+    }
+
+    // Update both every millisecond
+    setInterval(() => {
+      updateCountdown();
+      updateTimes();
+    }, 1);
   </script>
 </body>
 </html>
