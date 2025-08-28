@@ -47,6 +47,11 @@
       font-size: 1.4rem;
       font-weight: bold;
     }
+    @media (max-width: 600px) {
+      #times {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -70,7 +75,7 @@
         return;
       }
 
-      // Calculate date differences
+      // Calculate year, month, day differences
       let years = targetDate.getFullYear() - now.getFullYear();
       let months = targetDate.getMonth() - now.getMonth();
       let days = targetDate.getDate() - now.getDate();
@@ -85,6 +90,10 @@
         months += 12;
       }
 
+      // Convert some days into weeks
+      const weeks = Math.floor(days / 7);
+      days = days % 7;
+
       // Time differences
       const timeDiff = targetDate.getTime() - now.getTime();
       const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -93,7 +102,7 @@
       const milliseconds = timeDiff % 1000;
 
       countdownElement.textContent = 
-        `${years}y ${months}mo ${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
+        `${years}y ${months}mo ${weeks}w ${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
     }
 
     function updateTimes() {
