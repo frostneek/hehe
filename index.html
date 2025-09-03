@@ -1,13 +1,15 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hai's 18th Birthday Countdown</title>
+  <title>Rees's Basement</title>
   <style>
     body {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       height: 100vh;
       background: #0f172a;
@@ -17,8 +19,8 @@
       margin: 0;
     }
     h1 {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
+      font-size: 2.5rem;
+      margin: 20px;
     }
     #countdown {
       font-size: 1.6rem;
@@ -27,18 +29,18 @@
       padding: 20px 40px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      margin-bottom: 20px;
+      margin: 20px;
     }
     #times {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
       background: #1e293b;
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      width: 80%;
-      max-width: 600px;
+      width: 90%;
+      max-width: 1000px;
     }
     .time-box {
       background: #334155;
@@ -55,21 +57,33 @@
   </style>
 </head>
 <body>
-  <h1>Countdown to Hai's 18th Birthday 🎂</h1>
-  <div id="countdown">Loading...</div>
+  <h1>Rees's Basement</h1>
   <div id="times">
-    <div id="kaidenTime" class="time-box">Kaiden's Time: Loading...</div>
-    <div id="haiTime" class="time-box">Hai's Time: Loading...</div>
+    <div id="kaidenTime" class="time-box">🇬🇧 Kaiden's Time: Loading...</div>
+    <div id="haiTime" class="time-box">🇨🇦 Hai's Time: Loading...</div>
+    <div id="srinikaTime" class="time-box">🇸🇦 Srinika's Time: Loading...</div>
+    <div id="samhitaTime" class="time-box">🇸🇦 Samhita's Time: Loading...</div>
+    <div id="samanthaTime" class="time-box">🇸🇦 Samantha's Time: Loading...</div>
+    <div id="russellTime" class="time-box">🇨🇦 Russell's Time: Loading...</div>
+    <div id="ayanTime" class="time-box">🇬🇧 Ayan's Time: Loading...</div>
+    <div id="pabloTime" class="time-box">🇨🇦 Pablo's Time: Loading...</div>
   </div>
+  <div id="countdown">Loading...</div>
 
   <script>
     const countdownElement = document.getElementById("countdown");
     const kaidenElement = document.getElementById("kaidenTime");
     const haiElement = document.getElementById("haiTime");
-    const targetDate = new Date("July 12, 2029 00:00:00 GMT+0700"); // Vietnam time
+    const srinikaElement = document.getElementById("srinikaTime");
+    const samhitaElement = document.getElementById("samhitaTime");
+    const samanthaElement = document.getElementById("samanthaTime");
+    const russellElement = document.getElementById("russellTime");
+    const ayanElement = document.getElementById("ayanTime");
+    const pabloElement = document.getElementById("pabloTime");
+
+    const targetDate = new Date("July 12, 2029 00:00:00 GMT+0700");
 
     function getVietnamTime() {
-      // Get current time in Vietnam (UTC+7)
       const now = new Date();
       return new Date(now.toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }));
     }
@@ -81,7 +95,6 @@
         return;
       }
 
-      // Calculate years, months, days
       let years = targetDate.getFullYear() - now.getFullYear();
       let months = targetDate.getMonth() - now.getMonth();
       let days = targetDate.getDate() - now.getDate();
@@ -96,36 +109,34 @@
         months += 12;
       }
 
-      // Weeks
       const weeks = Math.floor(days / 7);
       days = days % 7;
 
-      // Time differences
       const timeDiff = targetDate.getTime() - now.getTime();
       const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
       const milliseconds = timeDiff % 1000;
 
-      countdownElement.textContent = 
-        `${years}y ${months}mo ${weeks}w ${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms (Birthplace Time | Vietnam)`;
+      countdownElement.textContent =
+        `${years}y ${months}mo ${weeks}w ${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms (🇻🇳 Vietnam Time)`;
     }
 
     function updateTimes() {
       const now = new Date();
 
-      const englandTime = now.toLocaleString("en-GB", { 
-        timeZone: "Europe/London", 
-        hour12: false 
-      });
+      const englandTime = now.toLocaleString("en-GB", { timeZone: "Europe/London", hour12: false });
+      const canadaTime = now.toLocaleString("en-CA", { timeZone: "America/Toronto", hour12: false });
+      const saudiTime = now.toLocaleString("en-SA", { timeZone: "Asia/Riyadh", hour12: false });
 
-      const canadaTime = now.toLocaleString("en-CA", { 
-        timeZone: "America/Toronto", 
-        hour12: false 
-      });
-
-      kaidenElement.textContent = `Kaiden's Time: ${englandTime}`;
-      haiElement.textContent = `Hai's Time: ${canadaTime}`;
+      kaidenElement.textContent = `🇬🇧 Kaiden's Time: ${englandTime}`;
+      haiElement.textContent = `🇨🇦 Hai's Time: ${canadaTime}`;
+      srinikaElement.textContent = `🇸🇦 Srinika's Time: ${saudiTime}`;
+      samhitaElement.textContent = `🇸🇦 Samhita's Time: ${saudiTime}`;
+      samanthaElement.textContent = `🇸🇦 Samantha's Time: ${saudiTime}`;
+      russellElement.textContent = `🇨🇦 Russell's Time: ${canadaTime}`;
+      ayanElement.textContent = `🇬🇧 Ayan's Time: ${englandTime}`;
+      pabloElement.textContent = `🇨🇦 Pablo's Time: ${canadaTime}`;
     }
 
     setInterval(() => {
