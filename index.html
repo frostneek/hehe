@@ -28,7 +28,7 @@
       animation: fadeIn 1.5s ease-in-out;
     }
     #countdown {
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: bold;
       background: #1e293b;
       padding: 20px 40px;
@@ -63,13 +63,33 @@
       font-size: 1.4rem;
       font-weight: bold;
       transform: scale(1);
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, background 0.3s ease;
+      position: relative;
     }
     .time-box:hover {
       transform: scale(1.05);
+      background: #475569;
+    }
+    .tooltip {
+      display: none;
+      position: absolute;
+      bottom: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111827;
+      color: #f9fafb;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    .time-box:hover .tooltip {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
     }
     @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(-20px);}
+      from {opacity: 0; transform: translateY(-10px);}
       to {opacity: 1; transform: translateY(0);}
     }
     @keyframes fadeInUp {
@@ -89,28 +109,58 @@
   <div class="time-section">
     <h3>🇬🇧 UK Friends</h3>
     <div class="times-grid">
-      <div id="kaidenTime" class="time-box">Kaiden's Time: Loading...</div>
-      <div id="ayanTime" class="time-box">Ayan's Time: Loading...</div>
-      <div id="ohgyuTime" class="time-box">Ohgyu's Time: Loading...</div>
+      <div class="time-box" id="kaidenTime">
+        Kaiden's Time: Loading...
+        <div class="tooltip"></div>
+      </div>
+      <div class="time-box" id="ayanTime">
+        Ayan's Time: Loading...
+        <div class="tooltip"></div>
+      </div>
+      <div class="time-box" id="ohgyuTime">
+        Ohgyu's Time: Loading...
+        <div class="tooltip"></div>
+      </div>
     </div>
   </div>
 
   <div class="time-section">
     <h3>🇨🇦 Canada Friends</h3>
     <div class="times-grid">
-      <div id="haiTime" class="time-box">Hai's Time: Loading...</div>
-      <div id="russellTime" class="time-box">Russell's Time: Loading...</div>
-      <div id="pabloTime" class="time-box">Pablo's Time: Loading...</div>
-      <div id="ayeshaTime" class="time-box">Ayesha's Time: Loading...</div>
+      <div class="time-box" id="haiTime">
+        Hai's Time: Loading...
+        <div class="tooltip"></div>
+      </div>
+      <div class="time-box" id="russellTime">
+        Russell's Time: Loading...
+        <div class="tooltip"></div>
+      </div>
+      <div class="time-box" id="pabloTime">
+        Pablo's Time: Loading...
+        <div class="tooltip"></div>
+      </div>
+      <div class="time-box" id="ayeshaTime">
+        Ayesha's Time: Loading...
+        <div class="tooltip"></div>
+      </div>
     </div>
   </div>
 
   <div class="time-section">
     <h3>🇸🇦 Saudi Arabia Friends</h3>
     <div class="times-grid">
-      <div id="srinikaTime" class="time-box">Srinika's Time: Loading...</div>
-      <div id="samhitaTime" class="time-box">Samhita's Time: Loading...</div>
-      <div id="samanthaTime" class="time-box">Samantha's Time: Loading...</div>
+      <div class="time-box" id="srinikaTime">
+        Srinika's Time: Loading...
+        <div class="tooltip"></div>
+      </div>
+      <div class="time-box" id="samhitaTime">
+        Samhita's Time: Loading...
+        <div class="tooltip"></div>
+      </div>
+      <div class="time-box" id="samanthaTime">
+        Samantha's Time: Loading...
+        <div class="tooltip"></div>
+      </div>
     </div>
   </div>
 
@@ -120,40 +170,62 @@
 
   <script>
     const countdownElement = document.getElementById("countdown");
-    const elements = {
-      kaiden: document.getElementById("kaidenTime"),
-      ayan: document.getElementById("ayanTime"),
-      ohgyu: document.getElementById("ohgyuTime"),
-      hai: document.getElementById("haiTime"),
-      russell: document.getElementById("russellTime"),
-      pablo: document.getElementById("pabloTime"),
-      ayesha: document.getElementById("ayeshaTime"),
-      srinika: document.getElementById("srinikaTime"),
-      samhita: document.getElementById("samhitaTime"),
-      samantha: document.getElementById("samanthaTime"),
+
+    const people = {
+      kaiden: { element: document.getElementById("kaidenTime"), birthday: "2008-04-09", gender: "Male" },
+      ayan: { element: document.getElementById("ayanTime"), birthday: "2010-01-01", gender: "Male" }, 
+      ohgyu: { element: document.getElementById("ohgyuTime"), birthday: "2010-01-01", gender: "Female" },
+      hai: { element: document.getElementById("haiTime"), birthday: "2011-07-12", gender: "Male" },
+      russell: { element: document.getElementById("russellTime"), birthday: "2010-01-01", gender: "Male" },
+      pablo: { element: document.getElementById("pabloTime"), birthday: "2010-01-01", gender: "Male" },
+      ayesha: { element: document.getElementById("ayeshaTime"), birthday: "2010-01-01", gender: "Female" },
+      srinika: { element: document.getElementById("srinikaTime"), birthday: "2011-02-14", gender: "Female" },
+      samhita: { element: document.getElementById("samhitaTime"), birthday: "2010-01-01", gender: "Female" },
+      samantha: { element: document.getElementById("samanthaTime"), birthday: "2010-01-01", gender: "Female" },
+    };
+
+    const zones = {
+      kaiden: "Europe/London",
+      ayan: "Europe/London",
+      ohgyu: "Europe/London",
+      hai: "America/Toronto",
+      russell: "America/Toronto",
+      pablo: "America/Toronto",
+      ayesha: "America/Edmonton",
+      srinika: "Asia/Riyadh",
+      samhita: "Asia/Riyadh",
+      samantha: "Asia/Riyadh"
     };
 
     const targetDate = new Date("July 12, 2029 00:00:00 GMT+0700");
 
-    function getVietnamTime() {
-      const now = new Date();
-      return new Date(now.toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }));
+    function getAge(birthday) {
+      const birthDate = new Date(birthday);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
     }
 
     function updateCountdown() {
-      const now = getVietnamTime();
-      if (now >= targetDate) {
+      const now = new Date();
+      const vnTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }));
+
+      if (vnTime >= targetDate) {
         countdownElement.textContent = "🎉 Happy 18th Birthday, Hai! 🎂";
         return;
       }
 
-      let years = targetDate.getFullYear() - now.getFullYear();
-      let months = targetDate.getMonth() - now.getMonth();
-      let days = targetDate.getDate() - now.getDate();
+      let years = targetDate.getFullYear() - vnTime.getFullYear();
+      let months = targetDate.getMonth() - vnTime.getMonth();
+      let days = targetDate.getDate() - vnTime.getDate();
 
       if (days < 0) {
         months--;
-        const prevMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+        const prevMonth = new Date(vnTime.getFullYear(), vnTime.getMonth() + 1, 0);
         days += prevMonth.getDate();
       }
       if (months < 0) {
@@ -164,40 +236,33 @@
       const weeks = Math.floor(days / 7);
       days %= 7;
 
-      const timeDiff = targetDate.getTime() - now.getTime();
-      const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-      const milliseconds = timeDiff % 1000;
+      const diff = targetDate.getTime() - vnTime.getTime();
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      const milliseconds = diff % 1000;
 
-      countdownElement.textContent =
-        `${years}y ${months}mo ${weeks}w ${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
+      countdownElement.textContent = `${years}y ${months}mo ${weeks}w ${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
     }
 
     function updateTimes() {
       const now = new Date();
+      for (const [name, data] of Object.entries(people)) {
+        const localTime = now.toLocaleString("en-GB", { timeZone: zones[name], hour12: false });
+        data.element.childNodes[0].textContent = `${capitalize(name)}'s Time: ${localTime}`;
+        const tooltip = data.element.querySelector(".tooltip");
+        tooltip.textContent = `🎂 Birthday: ${data.birthday} | 🎈 Age: ${getAge(data.birthday)} | 🚻 Gender: ${data.gender}`;
+      }
+    }
 
-      const england = now.toLocaleString("en-GB", { timeZone: "Europe/London", hour12: false });
-      const canada = now.toLocaleString("en-CA", { timeZone: "America/Toronto", hour12: false });
-      const calgary = now.toLocaleString("en-CA", { timeZone: "America/Edmonton", hour12: false });
-      const saudi = now.toLocaleString("en-SA", { timeZone: "Asia/Riyadh", hour12: false });
-
-      elements.kaiden.textContent = `Kaiden's Time: ${england}`;
-      elements.ayan.textContent = `Ayan's Time: ${england}`;
-      elements.ohgyu.textContent = `Ohgyu's Time: ${england}`;
-      elements.hai.textContent = `Hai's Time: ${canada}`;
-      elements.russell.textContent = `Russell's Time: ${canada}`;
-      elements.pablo.textContent = `Pablo's Time: ${canada}`;
-      elements.ayesha.textContent = `Ayesha's Time: ${calgary}`;
-      elements.srinika.textContent = `Srinika's Time: ${saudi}`;
-      elements.samhita.textContent = `Samhita's Time: ${saudi}`;
-      elements.samantha.textContent = `Samantha's Time: ${saudi}`;
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
     setInterval(() => {
       updateCountdown();
       updateTimes();
-    }, 1);
+    }, 100);
   </script>
 </body>
 </html>
